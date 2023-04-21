@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 @pytest.fixture()
@@ -10,8 +11,8 @@ def base_url(request):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--url", default="http://172.27.112.1:8081")
-    parser.addoption("--browser", default="chrome")
+    parser.addoption("--url", default="http://172.27.112.1:8081/")
+    parser.addoption("--browser", default="chrome", help="choose one: chrome or firefox")
     parser.addoption("--headless", action="store_true")
 
 
@@ -47,3 +48,8 @@ def driver(request, browser_options):
         driver = webdriver.Firefox(options=browser_options)
     yield driver
     driver.quit()
+
+
+@pytest.fixture()
+def wait(driver, timeout=5):
+    return WebDriverWait(driver, timeout=timeout)
