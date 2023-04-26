@@ -2,7 +2,6 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 @pytest.fixture()
@@ -48,8 +47,3 @@ def driver(request, browser_options):
         driver = webdriver.Firefox(options=browser_options)
     yield driver
     driver.quit()
-
-
-@pytest.fixture()
-def wait(driver, timeout=5):
-    return WebDriverWait(driver, timeout=timeout)
